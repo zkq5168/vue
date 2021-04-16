@@ -1,14 +1,12 @@
 <template>
-    <div>
-        <div class="container">
-            <h2>比赛网站后台管理</h2>
-            <div class="login">
-                <el-input  placeholder="请输入用户名" v-model="username"></el-input>
-                <el-input placeholder="请输入密码" v-model="password" show-password></el-input>
-            </div>
-            <div class="btns">
-                <el-button type="primary" @click="login">登录</el-button>
-            </div>
+    <div class="container">
+        <h2>比赛网站后台管理</h2>
+        <div class="login">
+            <el-input prefix-icon="icon-user" placeholder="请输入用户名" v-model="username"></el-input>
+            <el-input prefix-icon="icon-key" placeholder="请输入密码" v-model="password" show-password></el-input>
+        </div>
+        <div class="btns">
+            <el-button type="primary" @click="login">登录</el-button>
         </div>
     </div>
 </template>
@@ -23,17 +21,23 @@ export default {
     },
     methods: {
         login() {
-            this.axios.post("/login", {
+            let loading = this.$loading({ fullscreen: true });
+
+            this.axios.post("/apis/login", {
                 username: this.username,
                 password: this.password
             }).then((res)=>{
-                alert(res);
+                let data = res.data;
+                if(data.code==0){
+                    this.$router.push("/admin/index");
+                }else{
+                    this.$message.error(data.msg);
+                }
             }).catch((e, data)=>{
-                alert(data);
-            }).finally((res)=>{
-                alert(res);
-            });
-            // window.location.href = "/#/index";
+                this.$message.error(data);
+            }).finally(()=>
+                loading.close()
+            );
         }
     }
 }
