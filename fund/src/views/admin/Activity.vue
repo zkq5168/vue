@@ -22,6 +22,7 @@
         </el-row>
         <el-row>
             <el-table
+                v-loading="loading"
                 :data="activityList"
                 style="width: 100%">
                 <el-table-column
@@ -66,11 +67,12 @@
                 class="tr10"
                 background
                 layout="prev, pager, next"
-                :page-size = 5
+                @current-change="searchByPage"
+                :page-size = 8
                 :total="totalPage">
             </el-pagination>
         </el-row>
-        <el-dialog :title="dialogTitle" :visible.sync="showActivityDialog">
+        <el-dialog :title="dialogTitle" :visible.sync="showActivityDialog" :isEdit="isEdit">
             <el-form v-model="activityForm">
                 <el-form-item label-width="100px" label="活动名称">
                     <el-input v-model="activityForm.activityName"></el-input>
@@ -88,7 +90,7 @@
                     <el-input v-model="activityForm.activityDesc"></el-input>
                 </el-form-item>
                 <el-form-item label-width="100px" label="活动图片">
-                    <el-upload
+                    <el-upload v-model="activityForm.activityPic"
                         class="avatar-uploader"
                         action="/apis/upload"
                         :list-type = "image/jpeg"
@@ -102,7 +104,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="showActivityDialog = false">取 消</el-button>
-                <el-button type="primary" @click="showActivityDialog = false">确 定</el-button>
+                <el-button type="primary" @click="isEdit ? updateActivity() : saveActivity()">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -122,6 +124,8 @@ export default {
             imageUrl: '',
             //总页数
             totalPage: 1,
+            //是否修改
+            isEdit: false,
             //列表数据
             activityList: [
             // {
@@ -138,28 +142,41 @@ export default {
                 subTitle: '',           //活动子主题
                 activityContent: '',    //活动内容
                 activityDesc: ''        //活动描述
-            }
+            },
+            //表格加载是否显示加载动画
+            loading: true
         }
     },
     mounted() {
-        this.listActivity(1, 5)
+        this.listActivity(1)
     },
     methods: {
+        searchByPage(val){
+            this.listActivity(val);
+        },
         //查询活动
-        listActivity(pageNum, pageSize) {
+        listActivity(pageNum, pageSize, searchTxt) {
             let that = this;
-            if(!pageNum){
-                pageNum = 1;
+            var searchObj = {"pageNum": 1, "pageSize": 8, "param": null};
+            if(pageNum){
+                // pageNum = 1;
+                searchObj.pageNum = pageNum;
             }
-            if(!pageSize){
-                pageSize = 10;
+            if(pageSize){
+                // pageSize = 3;
+                searchObj.pageSize = pageSize;
+            }
+            if(searchTxt){
+                searchObj.param = searchTxt;
             }
 
-            this.axios.post("/apis/activity/list", { "pageNum": pageNum, "pageSize": pageSize})
+            this.axios.post("/apis/activity/list", searchObj)
             .then(res=>{
                 let data = res.data;
-                that.totalPage = data.result.length;
+                that.totalPage = data.totalNum;
                 if(data.code == 0){
+                    this.activityList.splice(0);
+
                     for(let i=0; i<data.result.length; i++){
                         that.activityList.push(data.result[i]);
                     }
@@ -168,25 +185,67 @@ export default {
                 }
             }).catch(e=>{
                 that.$message(e);
-            })
+            }).finally(() => {
+                that.loading = false;
+            });
         },
         //添加活动
         addActivity() {
             this.dialogTitle = '新增活动';
             this.showActivityDialog = true;
+            this.isEdit = false;
             //清空数据
             for(let attr in this.activityForm){
                 this.activityForm[attr] = '';
             }
         },
+        //保存活动
+        saveActivity() {
+            let that = this;
+            this.activityForm.activityPic = this.imageUrl;
+            this.axios.post("/apis/activity/save", this.activityForm)
+            .then(res=>{
+                let data = res.data;
+                if(data.code == 0){
+                    that.$message({
+                        type: "success",
+                        message: res.data.msg
+                    });
+                    that.showActivityDialog = false;
+                    that.listActivity();
+                }else{
+                    that.$message(res.data.msg);
+                }
+            })
+        },
         //编辑活动
         editActivity(index, rowData) {
             this.dialogTitle = '修改活动';
             this.showActivityDialog = true;
+            this.isEdit = true;
             //获取数据
             for(let attr in rowData){
                 this.activityForm[attr] = rowData[attr];
             }
+        },
+        updateActivity(){
+            let that = this;
+            this.axios.post("/apis/activity/update", this.activityForm)
+                .then(res => {
+                    if(res.data.code == 0){
+                        that.$message({
+                            type: "success",
+                            message: res.data.msg
+                        });
+                        that.showActivityDialog = false;
+                        that.listActivity();
+                    }else{
+                        that.$message({
+                            type: "warning",
+                            message: res.data.msg
+                        });
+                    }
+                })
         },
         //删除活动
         deleteActivity(index,rowData) {
@@ -225,16 +284,10 @@ export default {
             });
         },
         search(value) {
-            console.log(value);
-            this.axios.get('/apis/activity/search')
-            .then(res=>{
-                console.log(res);
-            }).catch((e,data)=>{
-                console.log(e, data);
-            });
+            this.listActivity(null, null, value);
         },
         uploadSuccess(response, file, fileList) {
-            debugger;
+            this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
         }
     }
 }
@@ -242,7 +295,7 @@ export default {
 
 <style scoped>
 .el-table {
-    min-height: 450px;
+    min-height: 475px;
 }
 
 .avatar-uploader {
