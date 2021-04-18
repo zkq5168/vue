@@ -16,7 +16,7 @@
             </div>
             <div class="personal">
                 <ul>
-                    <li><a href="javascript:;">admin</a></li>
+                    <li><a href="javascript:;">退出</a></li>
                 </ul>
             </div>
         </div>
