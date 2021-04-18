@@ -23,6 +23,10 @@
                 <el-table-column
                     label="用户类型"
                     prop="userType">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.userType==='origin'">普通用户</span>
+                        <span v-else>管理员</span>
+                    </template>
                 </el-table-column>
                 <el-table-column
                 align="right">
@@ -64,7 +68,11 @@
                     <el-input v-model="userForm.password"></el-input>
                 </el-form-item>
                 <el-form-item label-width="100px" label="用户类型">
-                    <el-input v-model="userForm.userType"></el-input>
+                    <el-select v-model="userForm.userType">
+                        <el-option label="管理员" value="admin"></el-option>
+                        <el-option label="普通用户" value="origin"></el-option>
+                    </el-select>
+                    <!-- <el-input v-model="userForm.userType"></el-input> -->
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
