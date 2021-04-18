@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/css/normalize.css';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueAxiosPlugin from 'vue-axios-plugin'
 import '@/assets/icomoon/style.css'
 
 Vue.use(VueAxios, axios);
