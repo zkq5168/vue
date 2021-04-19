@@ -5,15 +5,20 @@ import AdminIndex from "../views/admin/Index"
 import Login from "@/views/Login"
 import User from "@/views/admin/User"
 import Activity from "@/views/admin/Activity"
-import ActivityDetail from '@/views/admin/ActivityDetail'
+import ActivityPeroid from "@/views/admin/ActivityPeroid"
+import ActivityDetail from "@/views/admin/ActivityDetail"
+import SpecialOffer from "@/views/admin/SpecialOffer"
 import Business from '@/views/admin/Business'
 import Notice from '@/views/admin/Notice'
 
-
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
   routes:[
+    {
+      path: "/",
+      redirect: "/login"
+    },
     {
       path: "/admin",
       name: "adminHome",
@@ -35,9 +40,19 @@ export default new VueRouter({
           component: Activity
         },
         {
-          path: "/admin/activity_detail",
-          name: "activity_detail",
+          path: "/admin/activity/peroid",
+          name: "activityPeroid",
+          component: ActivityPeroid
+        },
+        {
+          path: "/admin/activity/detail",
+          name: "activityDetail",
           component: ActivityDetail
+        },
+        {
+          path: "/admin/special/offer",
+          name: "specialOffer",
+          component: SpecialOffer
         },
         {
           path: "/admin/business",
@@ -57,4 +72,14 @@ export default new VueRouter({
       component: Login
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next)=>{
+  if(to.path === '/login') return next();
+
+  const tokenStr = window.sessionStorage.getItem('token');
+  if(!tokenStr) return next('/login');
+  next();
+});
+
+export default router;

@@ -7,16 +7,16 @@
             <div class="sysname">
                 比赛网站后台管理
             </div>
-            <div class="menu">
+            <!-- <div class="menu">
                 <ul>
                     <li><a href="javascript:;">首页</a></li>
                     <li><a href="javascript:;">我的工作台</a></li>
                     <li><a href="javascript:;">统计报表</a></li>
                 </ul>
-            </div>
+            </div> -->
             <div class="personal">
                 <ul>
-                    <li><a href="javascript:;">退出</a></li>
+                    <li><a href="javascript:;" @click="logout">退出</a></li>
                 </ul>
             </div>
         </div>
@@ -25,7 +25,11 @@
 
 <script>
 export default {
-
+    methods: {
+        logout(){
+            this.$router.push("/login");
+        }
+    }
 }
 </script>
 
