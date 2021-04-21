@@ -93,10 +93,9 @@
                     <el-upload v-model="activityForm.activityPic"
                         class="avatar-uploader"
                         action="/apis/upload"
-                        :list-type = "image/jpeg"
+                        list-type = "image/jpeg"
                         :show-file-list="true"
-                        :on-success="uploadSuccess"
-                        :before-upload="beforeUpload">
+                        :on-success="uploadSuccess">
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>

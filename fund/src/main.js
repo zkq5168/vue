@@ -14,6 +14,11 @@ Vue.use(VueAxios, axios);
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
+axios.interceptors.request.use(config => {
+  config.headers.Token = window.sessionStorage.getItem("token");
+  return config;
+});
+
 new Vue({
   router,
   store,

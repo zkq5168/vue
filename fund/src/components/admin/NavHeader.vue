@@ -27,7 +27,13 @@
 export default {
     methods: {
         logout(){
-            this.$router.push("/login");
+            let that = this;
+            this.axios.get("/apis/logout")
+            .then(res=>{
+                debugger;
+                window.sessionStorage.clear();
+                that.$router.push("/login");
+            });
         }
     }
 }

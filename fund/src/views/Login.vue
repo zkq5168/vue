@@ -29,7 +29,6 @@ export default {
             }).then((res)=>{
                 let data = res.data;
                 if(data.code==0){
-                    debugger;
                     window.sessionStorage.setItem("token", data.result);
                     this.$router.push("/admin/index");
                 }else{
