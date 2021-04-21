@@ -14,20 +14,20 @@
                 </el-table-column>
                 <el-table-column
                     label="活动"
-                    prop="activityId">
+                    prop="activityName">
                 </el-table-column>
                 <el-table-column
                     label="活动期数"
-                    prop="peroidId">
+                    prop="periodName">
                 </el-table-column>
                 <el-table-column
                     label="明细标题"
                     prop="detailTitle">
                 </el-table-column>
-                <!-- <el-table-column
+                <el-table-column
                     label="明细内容"
                     prop="detailContent">
-                </el-table-column> -->
+                </el-table-column>
                 <el-table-column
                 align="right">
                 <template slot="header" slot-scope="scope">
@@ -62,10 +62,15 @@
         <el-dialog :title="dialogTitle" :visible.sync="showDialog" :isEdit="isEdit">
             <el-form v-model="activityDetailForm">
                 <el-form-item label-width="100px" label="活动名称">
-                    <el-input v-model="activityDetailForm.activityId"></el-input>
+                    <!-- <el-input v-model="activityDetailForm.activityId"></el-input> -->
+                    <el-select v-model="activityDetailForm.activityId" @change="selectActivity">
+                        <el-option v-for="item in activityList" :key="item.activityId" :label="item.activityName" :value="item.activityId"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label-width="100px" label="活动期数">
-                    <el-input v-model="activityDetailForm.peroidId"></el-input>
+                    <el-select v-model="activityDetailForm.periodId">
+                        <el-option v-for="item in periodList" :key="item.periodId" :label="item.periodName" :value="item.periodId"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label-width="100px" label="明细标题">
                     <el-input v-model="activityDetailForm.detailTitle"></el-input>
@@ -116,18 +121,40 @@ export default {
             //活动表单数据
             activityDetailForm: {
                 activityId: '',
-                peroidId: '',
+                periodId: '',
                 detailTitle: '',
                 detailContent: ''
             },
             //表格加载是否显示加载动画
-            loading: true
+            loading: true,
+            //活动列表数据
+            activityList: [],
+            //活动期数列表
+            periodList: []
         }
     },
     mounted() {
+        this.listActivity()
         this.listActivityDetail(1)
     },
     methods: {
+        selectActivity(selectValue){
+            let that = this;
+            let params = "?id="+selectValue;
+            this.axios.get("/apis/activity/period/listByActivity" + params)
+            .then(res=>{
+                that.periodList = res.data.result;
+            });
+        },
+        //查询活动
+        listActivity(){
+            let that = this;
+            let params = {"pageNum": 1, "pageSize": 100, "param": null};
+            this.axios.post("/apis/activity/list", params)
+            .then(res=>{
+                that.activityList = res.data.result;
+            });
+        },
         searchActivity() {
             let that = this;
 
