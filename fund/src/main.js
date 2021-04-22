@@ -9,9 +9,14 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueAxiosPlugin from 'vue-axios-plugin'
 import '@/assets/icomoon/style.css'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
 Vue.use(VueAxios, axios);
 Vue.use(ElementUI);
+Vue.use(VueQuillEditor);
 Vue.config.productionTip = false
 
 axios.interceptors.request.use(config => {
