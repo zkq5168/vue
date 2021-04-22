@@ -59,7 +59,7 @@
                 :total="totalPage">
             </el-pagination>
         </el-row>
-        <el-dialog :title="dialogTitle" :visible.sync="showUserDialog" :isEdit="isEdit">
+        <el-dialog :title="dialogTitle" :visible.sync="showUserDialog" :close-on-click-modal=false :isEdit="isEdit">
             <el-form v-model="userForm">
                 <el-form-item label-width="100px" label="用户账户">
                     <el-input v-model="userForm.account"></el-input>

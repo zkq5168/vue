@@ -20,7 +20,7 @@
                 <router-link to="/admin/special/offer">优惠活动管理</router-link>
             </li>
             <li><img src="@/assets/images/business.png">
-                <router-link to="/admin/business">交易商管理</router-link>
+                <router-link to="/admin/trader">交易商管理</router-link>
             </li>
             <li><img src="@/assets/images/notice.png">
                 <router-link to="/admin/notice">公告管理</router-link>

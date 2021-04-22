@@ -59,7 +59,7 @@
                 :total="totalPage">
             </el-pagination>
         </el-row>
-        <el-dialog :title="dialogTitle" :visible.sync="showPeriodDialog" :isEdit="isEdit">
+        <el-dialog :title="dialogTitle" :visible.sync="showPeriodDialog" :close-on-click-modal=false :isEdit="isEdit">
             <el-form v-model="periodForm">
                 <el-form-item label-width="100px" label="活动名称">
                     <el-select v-model="periodForm.activityId" placeholder="请选择活动">
