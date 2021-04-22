@@ -9,7 +9,7 @@ import ActivityPeroid from "@/views/admin/ActivityPeroid"
 import ActivityDetail from "@/views/admin/ActivityDetail"
 import SpecialOffer from "@/views/admin/SpecialOffer"
 import Trader from '@/views/admin/Trader'
-import Notice from '@/views/admin/Notice'
+import News from '@/views/admin/News'
 
 Vue.use(VueRouter);
 
@@ -60,9 +60,9 @@ const router = new VueRouter({
           component: Trader
         },
         {
-          path: "/admin/notice",
-          name: "notice",
-          component: Notice
+          path: "/admin/news",
+          name: "news",
+          component: News
         }
       ]
     },

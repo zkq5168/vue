@@ -1,32 +1,44 @@
 <template>
     <div class="container">
         <el-row>
-            <el-button type="primary" plain @click="addPeriod">新增</el-button>
+            <el-button type="primary" plain @click="addNews">新增</el-button>
         </el-row>
         <el-row>
             <el-table
                 v-loading="loading"
-                :data="periodList"
+                :data="newsList"
                 style="width: 100%">
                 <el-table-column
                     type="index"
                     width="50px">
                 </el-table-column>
                 <el-table-column
-                    label="活动名称"
-                    prop="activityName">
+                    label="交易商名称"
+                    prop="newsName">
                 </el-table-column>
                 <el-table-column
-                    label="期数"
-                    prop="periodName">
+                    label="交易商图片"
+                    prop="newsPic">
                 </el-table-column>
                 <el-table-column
-                    label="报名开始时间"
-                    prop="signupBegin">
+                    label="成立时间"
+                    prop="setupTime">
                 </el-table-column>
                 <el-table-column
-                    label="报名结束时间"
-                    prop="signupEnd">
+                    label="所属国家"
+                    prop="country">
+                </el-table-column>
+                <el-table-column
+                    label="货币点差"
+                    prop="currencySpead">
+                </el-table-column>
+                <el-table-column
+                    label="交易品种"
+                    prop="newsCategory">
+                </el-table-column>
+                <el-table-column
+                    label="监督机构"
+                    prop="supervisor">
                 </el-table-column>
                 <el-table-column
                 align="right">
@@ -40,11 +52,11 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
-                    @click="editPeriod(scope.$index, scope.row)">编辑</el-button>
+                    @click="editNews(scope.$index, scope.row)">编辑</el-button>
                     <el-button
                     size="mini"
                     type="danger"
-                    @click="deletePeriod(scope.$index, scope.row)">删除</el-button>
+                    @click="deleteNews(scope.$index, scope.row)">删除</el-button>
                 </template>
                 </el-table-column>
             </el-table>
@@ -59,52 +71,47 @@
                 :total="totalPage">
             </el-pagination>
         </el-row>
-        <el-dialog :title="dialogTitle" :visible.sync="showPeriodDialog" :close-on-click-modal=false :isEdit="isEdit">
-            <el-form v-model="periodForm">
-                <el-form-item label-width="100px" label="活动名称">
-                    <el-select v-model="periodForm.activityId" placeholder="请选择活动">
-                        <el-option v-for="item in activityList" :key="item.activityId" :label="item.activityName" :value="item.activityId"></el-option>
-                    </el-select>
+        <el-dialog :title="dialogTitle" :visible.sync="showNewsDialog" :close-on-click-modal=false :isEdit="isEdit">
+            <el-form v-model="newsForm">
+                <el-form-item label-width="100px" label="交易商名称">
+                    <el-input v-model="newsForm.newsName"></el-input>
                 </el-form-item>
-                <el-form-item label-width="100px" label="期数">
-                    <el-input v-model="periodForm.periodName"></el-input>
+                <el-form-item label-width="100px" label="活动图片">
+                    <el-upload v-model="newsForm.newsPic"
+                        class="avatar-uploader"
+                        action="/apis/upload"
+                        list-type = "image/jpeg"
+                        :show-file-list="true"
+                        :on-success="uploadSuccess">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
                 </el-form-item>
-                <el-form-item label-width="100px" label="报名开始时间">
+                <el-form-item label-width="100px" label="成立时间">
+                    <!-- <el-input v-model="newsForm.newsBegin"></el-input> -->
                     <el-date-picker
-                        v-model="periodForm.signupBegin"
+                        v-model="newsForm.setupTime"
                         type="date"
+                        value-format="yyyy-MM-dd"
                         placeholder="选择日期">
                     </el-date-picker>
-                    <!-- <el-input v-model="periodForm.signupBegin"></el-input> -->
                 </el-form-item>
-                <el-form-item label-width="100px" label="报名结束时间">
-                    <el-date-picker
-                        v-model="periodForm.signupEnd"
-                        type="date"
-                        placeholder="选择日期">
-                    </el-date-picker>
-                    <!-- <el-input v-model="periodForm.signupEnd"></el-input> -->
+                <el-form-item label-width="100px" label="所属国家">
+                    <el-input v-model="newsForm.country"></el-input>
                 </el-form-item>
-                <el-form-item label-width="100px" label="活动开始时间">
-                    <el-date-picker
-                        v-model="periodForm.periodBegin"
-                        type="date"
-                        placeholder="选择日期">
-                    </el-date-picker>
-                    <!-- <el-input v-model="periodForm.periodBegin"></el-input> -->
+                <el-form-item label-width="100px" label="货币点差">
+                    <el-input v-model="newsForm.currencySpead"></el-input>
                 </el-form-item>
-                <el-form-item label-width="100px" label="活动结束时间">
-                    <el-date-picker
-                        v-model="periodForm.periodEnd"
-                        type="date"
-                        placeholder="选择日期">
-                    </el-date-picker>
-                    <!-- <el-input v-model="periodForm.periodEnd"></el-input> -->
+                <el-form-item label-width="100px" label="交易品种">
+                    <el-input v-model="newsForm.newsCategory"></el-input>
+                </el-form-item>
+                <el-form-item label-width="100px" label="监督机构">
+                    <el-input v-model="newsForm.supervisor"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="showPeriodDialog = false">取 消</el-button>
-                <el-button type="primary" @click="isEdit ? updatePeriod() : savePeriod()">确 定</el-button>
+                <el-button @click="showNewsDialog = false">取 消</el-button>
+                <el-button type="primary" @click="isEdit ? updateNews() : saveNews()">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -115,7 +122,7 @@ export default {
     data() {
         return {
             //控制弹窗显示
-            showPeriodDialog: false,
+            showNewsDialog: false,
             //列表搜索关键字
             searchTxt: '',
             //对话框标题
@@ -127,7 +134,7 @@ export default {
             //是否修改
             isEdit: false,
             //列表数据
-            periodList: [
+            newsList: [
             // {
             //     activityPic: '',
             //     activityName: '活动',
@@ -136,85 +143,77 @@ export default {
             // }
             ],
             //活动表单数据
-            periodForm: {
-                activityId: '',         //活动ID
-                activityName: '',       //活动名称
-                periodName: '',         //期数
-                signupBegin: '',        //报名开始时间
-                signupEnd: '',          //报名结束时间
-                periodBegin: '',        //活动开始时间
-                periodEnd: '',          //活动结束时间
+            newsForm: {
+                newsId: '',          //交易商ID
+                newsName: '',        //交易商名称
+                newsPic: '',         //交易商图片
+                setupTime: '',         //成立时间
+                country: '',           //所属国家
+                currencySpead: '',     //货币点差
+                newsCategory: '',    //交易品种
+                supervisor: ''         //监督机构
             },
             //表格加载是否显示加载动画
-            loading: true,
-            //活动列表数据
-            activityList: []
+            loading: true
         }
     },
     mounted() {
-        this.listPeriod(1);
-        this.listActivity();
+        this.listNews(1)
     },
     methods: {
-        //查询活动
-        listActivity(){
-            let that = this;
-            let params = {"pageNum": 1, "pageSize": 100, "param": null};
-            this.axios.post("/apis/activity/list", params)
-            .then(res=>{
-                that.activityList = res.data.result;
-            });
-        },
         searchByPage(val){
-            this.listPeriod(val);
+            this.listNews(val);
         },
-        //查询活动期数
-        listPeriod(pageNum, pageSize, searchTxt) {
+        //查询活动
+        listNews(pageNum, pageSize, searchTxt) {
             let that = this;
             var searchObj = {"pageNum": 1, "pageSize": 8, "param": null};
             if(pageNum){
+                // pageNum = 1;
                 searchObj.pageNum = pageNum;
             }
             if(pageSize){
+                // pageSize = 3;
                 searchObj.pageSize = pageSize;
             }
             if(searchTxt){
                 searchObj.param = searchTxt;
             }
 
-            this.axios.post("/apis/activity/period/list", searchObj)
+            this.axios.post("/apis/news/list", searchObj)
             .then(res=>{
                 let data = res.data;
                 that.totalPage = data.totalNum;
                 if(data.code == 0){
-                    this.periodList.splice(0);
+                    that.newsList.splice(0);
 
                     for(let i=0; i<data.result.length; i++){
-                        that.periodList.push(data.result[i]);
+                        that.newsList.push(data.result[i]);
                     }
                 }else{
                     that.$message(data.msg);
                 }
-            }).catch(e=>{
-                that.$message(e);
+            }).catch(err => {
+                // that.$message(err.message);
             }).finally(() => {
                 that.loading = false;
             });
         },
         //添加活动
-        addPeriod() {
-            this.dialogTitle = '新增活动';
-            this.showPeriodDialog = true;
+        addNews() {
+            this.dialogTitle = '新增交易商';
+            this.showNewsDialog = true;
             this.isEdit = false;
             //清空数据
-            for(let attr in this.periodForm){
-                this.periodForm[attr] = '';
+            for(let attr in this.newsForm){
+                this.newsForm[attr] = '';
             }
         },
         //保存活动
-        savePeriod() {
+        saveNews() {
             let that = this;
-            this.axios.post("/apis/activity/period/save", this.periodForm)
+            this.newsForm.newsPic = this.imageUrl;
+            this.axios.post("/apis/news/save", this.newsForm)
             .then(res=>{
                 let data = res.data;
                 if(data.code == 0){
@@ -222,34 +221,34 @@ export default {
                         type: "success",
                         message: res.data.msg
                     });
-                    that.showPeriodDialog = false;
-                    that.listPeriod();
+                    that.showNewsDialog = false;
+                    that.listNews();
                 }else{
                     that.$message(res.data.msg);
                 }
             })
         },
         //编辑活动
-        editPeriod(index, rowData) {
-            this.dialogTitle = '修改活动';
-            this.showPeriodDialog = true;
+        editNews(index, rowData) {
+            this.dialogTitle = '修改交易商';
+            this.showNewsDialog = true;
             this.isEdit = true;
             //获取数据
             for(let attr in rowData){
-                this.periodForm[attr] = rowData[attr];
+                this.newsForm[attr] = rowData[attr];
             }
         },
-        updatePeriod(){
+        updateNews(){
             let that = this;
-            this.axios.post("/apis/activity/period/update", this.periodForm)
+            this.axios.post("/apis/news/update", this.newsForm)
                 .then(res => {
                     if(res.data.code == 0){
                         that.$message({
                             type: "success",
                             message: res.data.msg
                         });
-                        that.showPeriodDialog = false;
-                        that.listPeriod();
+                        that.showNewsDialog = false;
+                        that.listNews();
                     }else{
                         that.$message({
                             type: "warning",
@@ -259,14 +258,14 @@ export default {
                 })
         },
         //删除活动
-        deletePeriod(index,rowData) {
+        deleteNews(index,rowData) {
             let that = this;
             this.$confirm('是否确认删除该活动?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                that.axios.get("/apis/activity/period/delete?id=" + rowData.periodId)
+                that.axios.get("/apis/news/delete?id=" + rowData.newsId)
                 .then(res=>{
                     if(res.data.code == 0){
                         that.$message({
@@ -274,7 +273,7 @@ export default {
                             message: res.data.msg
                         });
                         //删除列表元素
-                        that.periodList.splice(index, 1);
+                        that.newsList.splice(index, 1);
                     }else{
                         that.$message({
                             type: 'warning',
@@ -295,7 +294,10 @@ export default {
             });
         },
         search(value) {
-            this.listPeriod(null, null, value);
+            this.listNews(null, null, value);
+        },
+        uploadSuccess(response, file, fileList) {
+            this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
         }
     }
 }

@@ -23,7 +23,7 @@
                 <router-link to="/admin/trader">交易商管理</router-link>
             </li>
             <li><img src="@/assets/images/notice.png">
-                <router-link to="/admin/notice">公告管理</router-link>
+                <router-link to="/admin/news">公告管理</router-link>
             </li>
         </ul>
     </div>
