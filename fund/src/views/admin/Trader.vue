@@ -219,6 +219,7 @@ export default {
         addTrader() {
             this.dialogTitle = '新增交易商';
             this.showTraderDialog = true;
+            this.fileList = [];
             this.isEdit = false;
             //清空数据
             for(let attr in this.traderForm){

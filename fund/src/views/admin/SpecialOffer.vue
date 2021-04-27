@@ -236,6 +236,7 @@ export default {
         addSpecialOffer() {
             this.dialogTitle = '新增活动';
             this.showSpecialOfferDialog = true;
+            this.fileList = [];
             this.isEdit = false;
             //清空数据
             for(let attr in this.specialOfferForm){

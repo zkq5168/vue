@@ -222,6 +222,7 @@ export default {
         addNews() {
             this.dialogTitle = '新增新闻';
             this.showNewsDialog = true;
+            this.fileList = [];
             this.isEdit = false;
             //清空数据
             for(let attr in this.newsForm){
