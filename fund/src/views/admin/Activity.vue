@@ -211,6 +211,7 @@ export default {
         addActivity() {
             this.dialogTitle = '新增活动';
             this.showActivityDialog = true;
+            this.fileList = [];
             this.isEdit = false;
             //清空数据
             for(let attr in this.activityForm){

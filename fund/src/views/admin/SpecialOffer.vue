@@ -70,6 +70,20 @@
                 </el-form-item>
                 <el-form-item label-width="100px" label="活动图片">
                     <el-upload v-model="specialOfferForm.specialOfferPic"
+                        class="upload-demo"
+                        action="/apis/upload"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :before-remove="beforeRemove"
+                        :on-success="uploadSuccess"
+                        multiple
+                        :limit="1"
+                        :on-exceed="handleExceed"
+                        :file-list="fileList">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                    </el-upload>
+                    <!-- <el-upload v-model="specialOfferForm.specialOfferPic"
                         class="avatar-uploader"
                         action="/apis/upload"
                         list-type = "image/jpeg"
@@ -77,7 +91,7 @@
                         :on-success="uploadSuccess">
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                    </el-upload> -->
                 </el-form-item>
                 <el-form-item label-width="100px" label="活动开始时间">
                     <!-- <el-input v-model="specialOfferForm.specialOfferBegin"></el-input> -->
@@ -124,6 +138,8 @@ export default {
             dialogTitle: '',
             //上传图片地址
             imageUrl: '',
+            //上传图片地址
+            fileList: [],
             //总页数
             totalPage: 1,
             //是否修改
@@ -254,6 +270,16 @@ export default {
             for(let attr in rowData){
                 this.specialOfferForm[attr] = rowData[attr];
             }
+
+            this.axios.get("/apis/activity/images/list?ids=" + rowData.specialOfferPic)
+            .then(res=>{
+                this.fileList = res.data;
+                for(let i=0; i<this.fileList.length; i++){
+                    if(this.fileList[i].fileName != undefined){
+                        this.fileList[i].name = this.fileList[i].fileName;
+                    }
+                }
+            });
         },
         updateSpecialOffer(){
             let that = this;
@@ -314,7 +340,19 @@ export default {
             this.listSpecialOffer(null, null, value);
         },
         uploadSuccess(response, file, fileList) {
-            this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
+            this.imageUrl = response.result.fileId;
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        handlePreview(file) {
+            console.log(file);
+        },
+        handleExceed(files, fileList) {
+            this.$message.warning('只能上传' + fileList.length + '个文件');
+        },
+        beforeRemove(file, fileList) {
+            return this.$confirm(`确定移除 ${ file.name }？`);
         }
     }
 }
