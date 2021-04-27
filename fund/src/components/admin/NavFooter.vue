@@ -2,11 +2,12 @@
     <div class="footer">
         <div class="title">
             <ul>
+                <li><a href="javascript:;">&copy;版权所有</a></li>
+                <!-- <li><a href="javascript:;">比赛规则</a></li>
                 <li><a href="javascript:;">比赛规则</a></li>
                 <li><a href="javascript:;">比赛规则</a></li>
                 <li><a href="javascript:;">比赛规则</a></li>
-                <li><a href="javascript:;">比赛规则</a></li>
-                <li><a href="javascript:;">比赛规则</a></li>
+                <li><a href="javascript:;">比赛规则</a></li> -->
             </ul>
         </div>
     </div>

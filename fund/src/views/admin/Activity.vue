@@ -89,7 +89,23 @@
                 <el-form-item label-width="100px" label="活动描述">
                     <el-input v-model="activityForm.activityDesc"></el-input>
                 </el-form-item>
-                <el-form-item label-width="100px" label="活动图片">
+                <el-form-item label-width="100px">
+                    <el-upload
+                        class="upload-demo"
+                        action="/apis/upload"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :before-remove="beforeRemove"
+                        :on-success="uploadSuccess"
+                        multiple
+                        :limit="3"
+                        :on-exceed="handleExceed"
+                        :file-list="fileList">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                    </el-upload>
+                </el-form-item>
+                <!-- <el-form-item label-width="100px" label="活动图片">
                     <el-upload v-model="activityForm.activityPic"
                         class="avatar-uploader"
                         action="/apis/upload"
@@ -99,7 +115,7 @@
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                </el-form-item>
+                </el-form-item> -->
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="showActivityDialog = false">取 消</el-button>
@@ -121,6 +137,8 @@ export default {
             dialogTitle: '',
             //上传图片地址
             imageUrl: '',
+            //上传图片地址
+            fileList: [],
             //总页数
             totalPage: 1,
             //是否修改
@@ -137,6 +155,7 @@ export default {
             //活动表单数据
             activityForm: {
                 activityName: '',       //活动名称
+                activityPic: '',        //活动图片
                 mainTitle: '',          //活动主题
                 subTitle: '',           //活动子主题
                 activityContent: '',    //活动内容
@@ -221,11 +240,22 @@ export default {
         editActivity(index, rowData) {
             this.dialogTitle = '修改活动';
             this.showActivityDialog = true;
+            this.imageUrl = rowData.activityPic;
+            this.fileList = [];
             this.isEdit = true;
             //获取数据
             for(let attr in rowData){
                 this.activityForm[attr] = rowData[attr];
             }
+            this.axios.get("/apis/activity/images/list?ids=" + this.imageUrl)
+            .then(res=>{
+                this.fileList = res.data;
+                for(let i=0; i<this.fileList.length; i++){
+                    if(this.fileList[i].fileName != undefined){
+                        this.fileList[i].name = this.fileList[i].fileName;
+                    }
+                }
+            });
         },
         updateActivity(){
             let that = this;
@@ -286,7 +316,25 @@ export default {
             this.listActivity(null, null, value);
         },
         uploadSuccess(response, file, fileList) {
-            this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
+            let imageArr = [];
+            for(let i=0; i<fileList.length; i++){
+                let f = fileList[i];
+                imageArr.push(f.response.result.fileId);
+                this.activityForm.activityPic = imageArr.join(",");
+            }
+            console.log(this.activityForm.activityPic);
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        handlePreview(file) {
+            console.log(file);
+        },
+        handleExceed(files, fileList) {
+            this.$message.warning('不允许超过' + fileList.length + '个文件');
+        },
+        beforeRemove(file, fileList) {
+            return this.$confirm(`确定移除 ${ file.name }？`);
         }
     }
 }

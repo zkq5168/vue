@@ -13,32 +13,20 @@
                     width="50px">
                 </el-table-column>
                 <el-table-column
-                    label="交易商名称"
-                    prop="newsName">
+                    label="新闻标题"
+                    prop="newsTitle">
                 </el-table-column>
                 <el-table-column
-                    label="交易商图片"
-                    prop="newsPic">
+                    label="新闻图片"
+                    prop="newsLogo">
                 </el-table-column>
                 <el-table-column
-                    label="成立时间"
-                    prop="setupTime">
+                    label="新闻内容"
+                    prop="newsContent">
                 </el-table-column>
                 <el-table-column
-                    label="所属国家"
-                    prop="country">
-                </el-table-column>
-                <el-table-column
-                    label="货币点差"
-                    prop="currencySpead">
-                </el-table-column>
-                <el-table-column
-                    label="交易品种"
-                    prop="newsCategory">
-                </el-table-column>
-                <el-table-column
-                    label="监督机构"
-                    prop="supervisor">
+                    label="发布日期"
+                    prop="publishDate">
                 </el-table-column>
                 <el-table-column
                 align="right">
@@ -73,11 +61,11 @@
         </el-row>
         <el-dialog :title="dialogTitle" :visible.sync="showNewsDialog" :close-on-click-modal=false :isEdit="isEdit">
             <el-form v-model="newsForm">
-                <el-form-item label-width="100px" label="交易商名称">
-                    <el-input v-model="newsForm.newsName"></el-input>
+                <el-form-item label-width="100px" label="新闻标题">
+                    <el-input v-model="newsForm.newsTitle"></el-input>
                 </el-form-item>
                 <el-form-item label-width="100px" label="活动图片">
-                    <el-upload v-model="newsForm.newsPic"
+                    <el-upload v-model="newsForm.newsLogo"
                         class="avatar-uploader"
                         action="/apis/upload"
                         list-type = "image/jpeg"
@@ -87,26 +75,20 @@
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label-width="100px" label="成立时间">
-                    <!-- <el-input v-model="newsForm.newsBegin"></el-input> -->
+                <el-form-item label-width="100px" label="发布日期">
                     <el-date-picker
-                        v-model="newsForm.setupTime"
+                        v-model="newsForm.publishDate"
                         type="date"
                         value-format="yyyy-MM-dd"
                         placeholder="选择日期">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label-width="100px" label="所属国家">
-                    <el-input v-model="newsForm.country"></el-input>
-                </el-form-item>
-                <el-form-item label-width="100px" label="货币点差">
-                    <el-input v-model="newsForm.currencySpead"></el-input>
-                </el-form-item>
-                <el-form-item label-width="100px" label="交易品种">
-                    <el-input v-model="newsForm.newsCategory"></el-input>
-                </el-form-item>
-                <el-form-item label-width="100px" label="监督机构">
-                    <el-input v-model="newsForm.supervisor"></el-input>
+                <el-form-item label-width="100px" label="新闻内容">
+                    <quill-editor class="editor"
+                        ref="myTextEditor"
+                        v-model="newsForm.newsContent"
+                        :options="editorOption">
+                    </quill-editor>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -144,17 +126,38 @@ export default {
             ],
             //活动表单数据
             newsForm: {
-                newsId: '',          //交易商ID
-                newsName: '',        //交易商名称
-                newsPic: '',         //交易商图片
-                setupTime: '',         //成立时间
-                country: '',           //所属国家
-                currencySpead: '',     //货币点差
-                newsCategory: '',    //交易品种
-                supervisor: ''         //监督机构
+                newsId: '',           //新闻ID
+                newsTitle: '',        //新闻标题
+                newsLogo: '',         //新闻图片
+                newsContent: '',      //新闻内容
+                publishDate: ''       //发布日期
             },
             //表格加载是否显示加载动画
-            loading: true
+            loading: true,
+            editorOption: {
+              modules: {
+                toolbar: [
+                  ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线 删除线
+                  ["blockquote", "code-block"], // 引用  代码块
+                  [{ header: 1 }, { header: 2 }], // 1、2 级标题
+                  [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表
+                  [{ script: "sub" }, { script: "super" }], // 上标/下标
+                  [{ indent: "-1" }, { indent: "+1" }], // 缩进
+                  // [{'direction': 'rtl'}],                         // 文本方向
+                  [{ size: ["small", false, "large", "huge"] }], // 字体大小
+                  [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
+                  [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
+                  [{ font: [] }], // 字体种类
+                  [{ align: [] }], // 对齐方式
+                  ["clean"], // 清除文本格式
+                  ["link", "image", "video"] // 链接、图片、视频
+                ], //工具菜单栏配置
+              },
+              placeholder: '请在这里添加新闻内容描述', //提示
+              readyOnly: false, //是否只读
+              theme: 'snow', //主题 snow/bubble
+              syntax: true, //语法检测
+            }
         }
     },
     mounted() {
@@ -201,7 +204,7 @@ export default {
         },
         //添加活动
         addNews() {
-            this.dialogTitle = '新增交易商';
+            this.dialogTitle = '新增新闻';
             this.showNewsDialog = true;
             this.isEdit = false;
             //清空数据
@@ -212,7 +215,7 @@ export default {
         //保存活动
         saveNews() {
             let that = this;
-            this.newsForm.newsPic = this.imageUrl;
+            this.newsForm.newsLogo = this.imageUrl;
             this.axios.post("/apis/news/save", this.newsForm)
             .then(res=>{
                 let data = res.data;
@@ -230,7 +233,7 @@ export default {
         },
         //编辑活动
         editNews(index, rowData) {
-            this.dialogTitle = '修改交易商';
+            this.dialogTitle = '修改新闻';
             this.showNewsDialog = true;
             this.isEdit = true;
             //获取数据
@@ -240,6 +243,7 @@ export default {
         },
         updateNews(){
             let that = this;
+            this.newsForm.newsLogo = this.imageUrl;
             this.axios.post("/apis/news/update", this.newsForm)
                 .then(res => {
                     if(res.data.code == 0){
@@ -325,5 +329,13 @@ export default {
 .tr10 {
     text-align: right;
     margin-top: 10px;
+}
+
+.editor {
+    height: 300px;
+}
+
+.dialog-footer {
+    margin-top: 50px;
 }
 </style>
