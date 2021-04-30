@@ -19,19 +19,31 @@
                     <ul>
                         <li>
                             <img src="@/assets/dot.png">
-                            <a href="javascript:;">sdlfkjsadlfjdsalfkjdslfj</a>
+                            <a href="javascript:;">黄金跌超10美元：空头将挑战重要支撑？</a>
                         </li>
                         <li>
                             <img src="@/assets/dot.png">
-                            <a href="javascript:;">sdlfkjsadlfjdsalfkjdslfj</a>
+                            <a href="javascript:;">黄金跌超10美元：空头将挑战重要支撑？</a>
                         </li>
                         <li>
                             <img src="@/assets/dot.png">
-                            <a href="javascript:;">sdlfkjsadlfjdsalfkjdslfj</a>
+                            <a href="javascript:;">黄金跌超10美元：空头将挑战重要支撑？</a>
                         </li>
                         <li>
                             <img src="@/assets/dot.png">
-                            <a href="javascript:;">sdlfkjsadlfjdsalfkjdslfj</a>
+                            <a href="javascript:;">黄金跌超10美元：空头将挑战重要支撑？</a>
+                        </li>
+                        <li>
+                            <img src="@/assets/dot.png">
+                            <a href="javascript:;">黄金跌超10美元：空头将挑战重要支撑？</a>
+                        </li>
+                        <li>
+                            <img src="@/assets/dot.png">
+                            <a href="javascript:;">黄金跌超10美元：空头将挑战重要支撑？</a>
+                        </li>
+                        <li>
+                            <img src="@/assets/dot.png">
+                            <a href="javascript:;">黄金跌超10美元：空头将挑战重要支撑？</a>
                         </li>
                     </ul>
                 </div>
@@ -63,16 +75,19 @@
                         label="MT4"
                         width="118px">
                         <template slot-scope="scope">
-                            <span>{{ scope.row.mt4 }}</span>
+                            <span style="color: #016eff">{{ scope.row.mt4 }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
                         label="盈利(%)">
                         <template slot-scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.profit }}</span>
+                            <span style="margin-left: 10px; color: #fe8080">{{ scope.row.profit }}</span>
                         </template>
                     </el-table-column>
                 </el-table>
+                <div class="show_more">
+                    <a href="javascript:;">查看更多排行 >></a>
+                </div>
             </div>
             <div class="comment">
                 最新评论
@@ -87,7 +102,7 @@
                             <div class="user-comment">希望周期缩短，次数增多~</div>
                             <div class="comment-footer">
                                 <div class="comment-date">4月11日 16:33</div>
-                                <div class="support"><img src="">赞31</div>
+                                <div class="support"><img src="@/assets/praise.png" width="15px">赞31</div>
                             </div>
                         </div>
                     </li>
@@ -100,7 +115,59 @@
                             <div class="user-comment">希望周期缩短，次数增多~</div>
                             <div class="comment-footer">
                                 <div class="comment-date">4月11日 16:33</div>
-                                <div class="support"><img src="">赞31</div>
+                                <div class="support"><img src="@/assets/praise.png" width="15px">赞31</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="user-img">
+                            <img src="@/assets/head.png" width="30px">
+                        </div>
+                        <div class="user-right">
+                            <div class="user-name">用户2345234234</div>
+                            <div class="user-comment">希望周期缩短，次数增多~</div>
+                            <div class="comment-footer">
+                                <div class="comment-date">4月11日 16:33</div>
+                                <div class="support"><img src="@/assets/praise.png" width="15px">赞31</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="user-img">
+                            <img src="@/assets/head.png" width="30px">
+                        </div>
+                        <div class="user-right">
+                            <div class="user-name">用户2345234234</div>
+                            <div class="user-comment">希望周期缩短，次数增多~</div>
+                            <div class="comment-footer">
+                                <div class="comment-date">4月11日 16:33</div>
+                                <div class="support"><img src="@/assets/praise.png" width="15px">赞31</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="user-img">
+                            <img src="@/assets/head.png" width="30px">
+                        </div>
+                        <div class="user-right">
+                            <div class="user-name">用户2345234234</div>
+                            <div class="user-comment">希望周期缩短，次数增多~</div>
+                            <div class="comment-footer">
+                                <div class="comment-date">4月11日 16:33</div>
+                                <div class="support"><img src="@/assets/praise.png" width="15px">赞31</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="user-img">
+                            <img src="@/assets/head.png" width="30px">
+                        </div>
+                        <div class="user-right">
+                            <div class="user-name">用户2345234234</div>
+                            <div class="user-comment">希望周期缩短，次数增多~</div>
+                            <div class="comment-footer">
+                                <div class="comment-date">4月11日 16:33</div>
+                                <div class="support"><img src="@/assets/praise.png" width="15px">赞31</div>
                             </div>
                         </div>
                     </li>
@@ -132,6 +199,48 @@ export default {
                 name: '王小虎',
                 mt4: '***24',
                 profit: 601.45
+                },
+                {
+                rank: '1',
+                name: '王小虎',
+                mt4: '***24',
+                profit: 601.45
+                },
+                {
+                rank: '2',
+                name: '王小虎',
+                mt4: '***24',
+                profit: 601.45
+                },
+                {
+                rank: '3',
+                name: '王小虎',
+                mt4: '***24',
+                profit: 601.45
+                },
+                {
+                rank: '1',
+                name: '王小虎',
+                mt4: '***24',
+                profit: 601.45
+                },
+                {
+                rank: '2',
+                name: '王小虎',
+                mt4: '***24',
+                profit: 601.45
+                },
+                {
+                rank: '3',
+                name: '王小虎',
+                mt4: '***24',
+                profit: 601.45
+                },
+                {
+                rank: '3',
+                name: '王小虎',
+                mt4: '***24',
+                profit: 601.45
                 }
             ]
         }
@@ -152,6 +261,7 @@ export default {
 <style scoped>
 .container {
     margin-top: -80px;
+    padding-bottom: 50px;
 }
 
 .banner {
@@ -189,11 +299,13 @@ export default {
     width: 1200px;
     text-align: center;
     display: flex;
+    min-height: 600px;
 }
 
 .news, .rank, .comment {
     font-size: 18px;
     color: #0056dd;
+    font-weight: 700;
 }
 
 .news {
@@ -252,14 +364,28 @@ export default {
     margin-left: 23px;
 }
 
+.show_more {
+    padding-top: 20px;
+}
+
+.show_more a {
+    font-size: 14px;
+}
+
 .comment {
     flex: 1;
+}
+
+.comment ul {
+    padding-left: 23px;
+    margin-top: 25px;
 }
 
 .comment li {
     margin-bottom: 10px;
     height: 50px;
     clear: both;
+    padding-bottom: 30px;
 }
 
 .user-img {
@@ -277,27 +403,34 @@ export default {
 }
 
 .user-right {
-    width: 210px;
+    width: 225px;
     float: right;
     font-size: 12px;
 }
 
 .user-right .user-name {
     text-align: left;
+    padding-bottom: 10px;
 }
 
 .user-right .user-comment {
     text-align: left;
     color: #000;
+    padding-bottom: 10px;
 }
 
 .user-right .comment-date {
     float: left;
-    color: #000;
+    color: #a0a0a0;
 }
 
 .user-right .support {
     float: right;
-    color: #000;
+    color: #a0a0a0;
+}
+
+.user-right .support img {
+    vertical-align: middle;
+    padding-right: 5px;
 }
 </style>

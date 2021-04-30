@@ -68,6 +68,7 @@
 .activity a {
     border: 1px solid #fff;
     padding: 10px 20px;
+    font-family: sans-serif;
 }
 
 .activity img {
