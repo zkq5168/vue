@@ -4,29 +4,91 @@
             <div class="content">
                 <div class="menu">
                     <ul>
-                        <li><a href="javascript:;">关于报名</a></li>
-                        <li><a href="javascript:;">关于规则</a></li>
-                        <li><a href="javascript:;">关于违规交易</a></li>
-                        <li><a href="javascript:;">关于奖金</a></li>
-                        <li><a href="javascript:;">大赛介绍</a></li>
+                        <li><a href="javascript:;" @click="toggleFaq(0)">关于报名</a></li>
+                        <li><a href="javascript:;" @click="toggleFaq(1)">关于规则</a></li>
+                        <li><a href="javascript:;" @click="toggleFaq(2)">关于违规交易</a></li>
+                        <li><a href="javascript:;" @click="toggleFaq(3)">关于奖金</a></li>
+                        <li><a href="javascript:;" @click="toggleFaq(4)">大赛介绍</a></li>
                     </ul>
                 </div>
                 <div class="faq">
-                    <h2>关于违规交易</h2>
-                    <ul>
-                        <li>
-                            <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                            <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                        </li>
-                        <li>
-                            <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                            <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                        </li>
-                        <li>
-                            <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                            <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                        </li>
-                    </ul>
+                    <div class="faq_content" :style="{'top': faqPosStr}">
+                        <h2>关于违规交易1</h2>
+                        <ul>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                        </ul>
+                        <h2>关于违规交易2</h2>
+                        <ul>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                        </ul>
+                        <h2>关于违规交易3</h2>
+                        <ul>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                        </ul>
+                        <h2>关于违规交易4</h2>
+                        <ul>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                        </ul>
+                        <h2>关于违规交易5</h2>
+                        <ul>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                            <li>
+                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
+                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,6 +97,24 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            faqPos: 0,
+            faqPosStr: ''
+        }
+    },
+    methods: {
+        toggleFaq(pos) {
+            this.faqPos = -1 * pos * 388;
+            this.faqPosStr = this.faqPos + "px";
+        }
+    }
+}
+</script>
+
 
 <style scoped>
 .rule {
@@ -91,6 +171,8 @@
     padding-left: 55px;
     box-sizing: border-box;
     color: #fff;
+    overflow: hidden;
+    position: relative;
 }
 
 .faq h2 {
@@ -122,6 +204,10 @@
 
 .faq .answer {
     color: #ffec4b;
+}
+
+.faq .faq_content {
+    position: absolute;
 }
 
 .copyright {

@@ -38,11 +38,17 @@
 
 .header li {
     float: left;
-    padding: 0 20px;
+    padding: 0 10px;
 }
 
 .header a {
     color: #fff;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+
+.header a:hover {
+    border: 1px solid #fff;
 }
 
 .activity h3 {
