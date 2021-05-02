@@ -13,7 +13,7 @@
                 最新资讯
                 <hr>
                 <div class="image">
-                    <img src="@/assets/news.png">
+                    <img src="@/assets/news.png" width="100%">
                 </div>
                 <div class="new_list">
                     <ul>
