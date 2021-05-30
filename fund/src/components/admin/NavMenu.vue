@@ -10,6 +10,9 @@
             <li><img src="@/assets/images/activity.png">
                 <router-link to="/admin/activity">活动管理</router-link>
             </li>
+            <li><img src="@/assets/images/rule.png">
+                <router-link to="/admin/activity/rule">活动规则管理</router-link>
+            </li>
             <li><img src="@/assets/images/peroid.png">
                 <router-link to="/admin/activity/peroid">活动期数管理</router-link>
             </li>

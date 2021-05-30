@@ -1,45 +1,21 @@
 <template>
     <div class="container">
         <el-row>
-            <el-button type="primary" plain @click="addTrader">新增</el-button>
+            <el-button type="primary" plain @click="addRule">新增</el-button>
         </el-row>
         <el-row>
             <el-table
                 v-loading="loading"
-                :data="traderList"
+                :data="ruleList"
                 style="width: 100%">
                 <el-table-column
                     type="index"
                     width="50px">
                 </el-table-column>
                 <el-table-column
-                    label="交易商名称"
-                    prop="traderName">
+                    label="规则名称"
+                    prop="ruleName">
                 </el-table-column>
-                <!-- <el-table-column
-                    label="交易商图片"
-                    prop="traderPic">
-                </el-table-column> -->
-                <el-table-column
-                    label="成立时间"
-                    prop="setupTime">
-                </el-table-column>
-                <!-- <el-table-column
-                    label="所属国家"
-                    prop="country">
-                </el-table-column>
-                <el-table-column
-                    label="货币点差"
-                    prop="currencySpead">
-                </el-table-column>
-                <el-table-column
-                    label="交易品种"
-                    prop="traderCategory">
-                </el-table-column>
-                <el-table-column
-                    label="监督机构"
-                    prop="supervisor">
-                </el-table-column> -->
                 <el-table-column
                 align="right">
                 <template slot="header" slot-scope="scope">
@@ -52,11 +28,11 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
-                    @click="editTrader(scope.$index, scope.row)">编辑</el-button>
+                    @click="editRule(scope.$index, scope.row)">编辑</el-button>
                     <el-button
                     size="mini"
                     type="danger"
-                    @click="deleteTrader(scope.$index, scope.row)">删除</el-button>
+                    @click="deleteRule(scope.$index, scope.row)">删除</el-button>
                 </template>
                 </el-table-column>
             </el-table>
@@ -71,68 +47,23 @@
                 :total="totalPage">
             </el-pagination>
         </el-row>
-        <el-dialog :title="dialogTitle" :visible.sync="showTraderDialog" :close-on-click-modal=false :isEdit="isEdit">
-            <el-form v-model="traderForm">
-                <el-form-item label-width="100px" label="交易商名称">
-                    <el-input v-model="traderForm.traderName"></el-input>
+        <el-dialog :title="dialogTitle" :visible.sync="showRuleDialog" :close-on-click-modal=false :isEdit="isEdit">
+            <el-form v-model="ruleForm">
+                <el-form-item label-width="100px" label="规则名称">
+                    <el-input v-model="ruleForm.ruleName"></el-input>
                 </el-form-item>
-                <el-form-item label-width="100px" label="交易商图片">
-                    <el-upload v-model="traderForm.traderPic"
-                        class="upload-demo"
-                        action="/apis/upload"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
-                        :on-success="uploadSuccess"
-                        multiple
-                        :limit="1"
-                        :on-exceed="handleExceed"
-                        :file-list="fileList">
-                        <el-button size="small" type="primary">点击上传</el-button>
-                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-                    </el-upload>
-                    <!-- <el-upload v-model="traderForm.traderPic"
-                        class="avatar-uploader"
-                        action="/apis/upload"
-                        list-type = "image/jpeg"
-                        :show-file-list="true"
-                        :on-success="uploadSuccess">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload> -->
-                </el-form-item>
-                <el-form-item label-width="100px" label="成立时间">
-                    <!-- <el-input v-model="traderForm.traderBegin"></el-input> -->
-                    <el-date-picker
-                        v-model="traderForm.setupTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item>
+                <el-form-item label-width="100px" label="规则内容" class="editor">
+                    <!-- <el-input v-model="ruleForm.ruleContent"></el-input> -->
                     <quill-editor class="editor"
                         ref="myTextEditor"
-                        v-model="traderForm.traderContent"
+                        v-model="ruleForm.ruleContent"
                         :options="editorOption">
                     </quill-editor>
                 </el-form-item>
-                <!-- <el-form-item label-width="100px" label="所属国家">
-                    <el-input v-model="traderForm.country"></el-input>
-                </el-form-item>
-                <el-form-item label-width="100px" label="货币点差">
-                    <el-input v-model="traderForm.currencySpead"></el-input>
-                </el-form-item>
-                <el-form-item label-width="100px" label="交易品种">
-                    <el-input v-model="traderForm.traderCategory"></el-input>
-                </el-form-item>
-                <el-form-item label-width="100px" label="监督机构">
-                    <el-input v-model="traderForm.supervisor"></el-input>
-                </el-form-item> -->
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="showTraderDialog = false">取 消</el-button>
-                <el-button type="primary" @click="isEdit ? updateTrader() : saveTrader()">确 定</el-button>
+                <el-button @click="showRuleDialog = false">取 消</el-button>
+                <el-button type="primary" @click="isEdit ? updateRule() : saveRule()">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -143,7 +74,7 @@ export default {
     data() {
         return {
             //控制弹窗显示
-            showTraderDialog: false,
+            showRuleDialog: false,
             //列表搜索关键字
             searchTxt: '',
             //对话框标题
@@ -157,7 +88,7 @@ export default {
             //是否修改
             isEdit: false,
             //列表数据
-            traderList: [
+            ruleList: [
             // {
             //     activityPic: '',
             //     activityName: '活动',
@@ -166,16 +97,11 @@ export default {
             // }
             ],
             //活动表单数据
-            traderForm: {
-                traderId: '',          //交易商ID
-                traderName: '',        //交易商名称
-                traderPic: '',         //交易商图片
-                setupTime: '',         //成立时间
-                // country: '',           //所属国家
-                // currencySpead: '',     //货币点差
-                // traderCategory: '',    //交易品种
-                // supervisor: ''         //监督机构
-                traderContent: ''      //交易商描述
+            ruleForm: {
+                ruleId: '',          //比赛规则ID
+                ruleName: '',        //比赛规则名称
+                ruleContent: '',     //比赛规则内容
+                displayOrder: 0      //排序号
             },
             //表格加载是否显示加载动画
             loading: true,
@@ -198,22 +124,22 @@ export default {
                   ["link", "image", "video"] // 链接、图片、视频
                 ], //工具菜单栏配置
               },
-              placeholder: '在这里添加交易商描述', //提示
+              placeholder: '请在这里添加优惠活动描述', //提示
               readyOnly: false, //是否只读
               theme: 'snow', //主题 snow/bubble
-              syntax: true   //语法检测
+              syntax: true, //语法检测
             }
         }
     },
     mounted() {
-        this.listTrader(1)
+        this.listRule(1)
     },
     methods: {
         searchByPage(val){
-            this.listTrader(val);
+            this.Rule(val);
         },
         //查询活动
-        listTrader(pageNum, pageSize, searchTxt) {
+        listRule(pageNum, pageSize, searchTxt) {
             let that = this;
             var searchObj = {"pageNum": 1, "pageSize": 8, "param": null};
             if(pageNum){
@@ -228,15 +154,15 @@ export default {
                 searchObj.param = searchTxt;
             }
 
-            this.axios.post("/apis/trader/list", searchObj)
+            this.axios.post("/apis/activity/rule/list", searchObj)
             .then(res=>{
                 let data = res.data;
                 that.totalPage = data.totalNum;
                 if(data.code == 0){
-                    that.traderList.splice(0);
+                    that.ruleList.splice(0);
 
                     for(let i=0; i<data.result.length; i++){
-                        that.traderList.push(data.result[i]);
+                        that.ruleList.push(data.result[i]);
                     }
                 }else{
                     that.$message(data.msg);
@@ -248,21 +174,21 @@ export default {
             });
         },
         //添加活动
-        addTrader() {
-            this.dialogTitle = '新增交易商';
-            this.showTraderDialog = true;
+        addRule() {
+            this.dialogTitle = '新增活动规则';
+            this.showRuleDialog = true;
             this.fileList = [];
             this.isEdit = false;
             //清空数据
-            for(let attr in this.traderForm){
-                this.traderForm[attr] = '';
+            for(let attr in this.ruleForm){
+                this.ruleForm[attr] = '';
             }
         },
         //保存活动
-        saveTrader() {
+        saveRule() {
             let that = this;
-            this.traderForm.traderPic = this.imageUrl;
-            this.axios.post("/apis/trader/save", this.traderForm)
+            this.ruleForm.rulePic = this.imageUrl;
+            this.axios.post("/apis/activity/rule/save", this.ruleForm)
             .then(res=>{
                 let data = res.data;
                 if(data.code == 0){
@@ -270,45 +196,34 @@ export default {
                         type: "success",
                         message: res.data.msg
                     });
-                    that.showTraderDialog = false;
-                    that.listTrader();
+                    that.showRuleDialog = false;
+                    that.listRule();
                 }else{
                     that.$message(res.data.msg);
                 }
             })
         },
         //编辑活动
-        editTrader(index, rowData) {
-            this.dialogTitle = '修改交易商';
-            this.showTraderDialog = true;
-            this.fileList = [];
+        editRule(index, rowData) {
+            this.dialogTitle = '修改活动规则';
+            this.showRuleDialog = true;
             this.isEdit = true;
             //获取数据
             for(let attr in rowData){
-                this.traderForm[attr] = rowData[attr];
+                this.ruleForm[attr] = rowData[attr];
             }
-
-            this.axios.get("/apis/activity/images/list?ids=" + rowData.traderPic)
-            .then(res=>{
-                this.fileList = res.data;
-                for(let i=0; i<this.fileList.length; i++){
-                    if(this.fileList[i].fileName != undefined){
-                        this.fileList[i].name = this.fileList[i].fileName;
-                    }
-                }
-            });
         },
-        updateTrader(){
+        updateRule(){
             let that = this;
-            this.axios.post("/apis/trader/update", this.traderForm)
+            this.axios.post("/apis/activity/rule/update", this.ruleForm)
                 .then(res => {
                     if(res.data.code == 0){
                         that.$message({
                             type: "success",
                             message: res.data.msg
                         });
-                        that.showTraderDialog = false;
-                        that.listTrader();
+                        that.showRuleDialog = false;
+                        that.listRule();
                     }else{
                         that.$message({
                             type: "warning",
@@ -318,14 +233,14 @@ export default {
                 })
         },
         //删除活动
-        deleteTrader(index,rowData) {
+        deleteRule(index,rowData) {
             let that = this;
             this.$confirm('是否确认删除该活动?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                that.axios.get("/apis/trader/delete?id=" + rowData.traderId)
+                that.axios.get("/apis/activity/rule/delete?id=" + rowData.ruleId)
                 .then(res=>{
                     if(res.data.code == 0){
                         that.$message({
@@ -333,7 +248,7 @@ export default {
                             message: res.data.msg
                         });
                         //删除列表元素
-                        that.traderList.splice(index, 1);
+                        that.ruleList.splice(index, 1);
                     }else{
                         that.$message({
                             type: 'warning',
@@ -354,10 +269,10 @@ export default {
             });
         },
         search(value) {
-            this.listTrader(null, null, value);
+            this.listRule(null, null, value);
         },
         uploadSuccess(response, file, fileList) {
-            this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
+            this.imageUrl = response.result.fileId;
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);

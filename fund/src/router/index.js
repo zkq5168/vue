@@ -5,6 +5,7 @@ import AdminIndex from "../views/admin/Index"
 import Login from "@/views/Login"
 import User from "@/views/admin/User"
 import Activity from "@/views/admin/Activity"
+import ActivityRule from '@/views/admin/ActivityRule'
 import ActivityPeroid from "@/views/admin/ActivityPeroid"
 import ActivityDetail from "@/views/admin/ActivityDetail"
 import SpecialOffer from "@/views/admin/SpecialOffer"
@@ -38,6 +39,11 @@ const router = new VueRouter({
           path: "/admin/activity",
           name: "activity",
           component: Activity
+        },
+        {
+          path: "/admin/activity/rule",
+          name: "rule",
+          component: ActivityRule
         },
         {
           path: "/admin/activity/peroid",

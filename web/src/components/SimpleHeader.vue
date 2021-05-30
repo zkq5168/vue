@@ -10,11 +10,6 @@
             <li v-if="sessionKey===null"><a href="/#/register">注册</a></li>
             <li v-if="sessionKey!=null"><a href="javascript:;" @click="logout">注销</a></li>
         </ul>
-        <div class="activity">
-            <h3>第一期全球交易大赛</h3>
-            <h3>丰厚奖金等你来拿</h3>
-            <h3><a href="javascript:;">立即报名<img src="@/assets/arrow-r.png" width="20px"></a></h3>
-        </div>
     </div>
 </template>
 
@@ -50,13 +45,10 @@ export default {
 
 <style scoped>
 .header {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
     width: 100%;
     height: 80px;
     z-index: 999;
+    background: url(../assets/simple-header.png);
 }
 
 .header ul {
@@ -70,7 +62,6 @@ export default {
 .header li {
     float: left;
     padding: 0 10px;
-    color: #fff;
 }
 
 .header a {
@@ -81,35 +72,5 @@ export default {
 
 .header a:hover {
     border: 1px solid #fff;
-}
-
-.activity h3 {
-    font-size: 46px;
-    color: #fff;
-    text-align: center;
-    margin: 0 auto;
-}
-
-.activity h3:first-child {
-    margin-top: 50px;
-}
-
-.activity h3:nth-child(2) {
-    margin-top: 20px;
-}
-
-.activity h3:nth-child(3) {
-    font-size: 20px;
-    margin-top: 25px;
-}
-
-.activity a {
-    border: 1px solid #fff;
-    padding: 10px 20px;
-    font-family: sans-serif;
-}
-
-.activity img {
-    vertical-align: middle;
 }
 </style>

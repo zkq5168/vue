@@ -3,15 +3,21 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'normalize.css'
-import Axios from 'axios'
-import AxiosVue from 'axios-vue'
+import axios from 'axios'
+// import AxiosVue from 'axios-vue'
+import VueAxios from 'vue-axios';
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
-Vue.use(Axios, AxiosVue);
+Vue.use(VueAxios, axios);
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+
+axios.interceptors.request.use(config => {
+  config.headers.Token = window.sessionStorage.getItem("token");
+  return config;
+});
 
 new Vue({
   router,

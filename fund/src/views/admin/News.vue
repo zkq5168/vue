@@ -252,18 +252,21 @@ export default {
         editNews(index, rowData) {
             this.dialogTitle = '修改新闻';
             this.showNewsDialog = true;
+            this.imageUrl = rowData.newsLogo;
             this.isEdit = true;
             //获取数据
+
+            let that = this;
             for(let attr in rowData){
                 this.newsForm[attr] = rowData[attr];
             }
 
             this.axios.get("/apis/activity/images/list?ids=" + rowData.newsLogo)
             .then(res=>{
-                this.fileList = res.data;
-                for(let i=0; i<this.fileList.length; i++){
-                    if(this.fileList[i].fileName != undefined){
-                        this.fileList[i].name = this.fileList[i].fileName;
+                that.fileList = res.data;
+                for(let i=0; i<that.fileList.length; i++){
+                    if(that.fileList[i].fileName != undefined){
+                        that.fileList[i].name = that.fileList[i].fileName;
                     }
                 }
             });
@@ -328,7 +331,8 @@ export default {
             this.listNews(null, null, value);
         },
         uploadSuccess(response, file, fileList) {
-            this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
+            // this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
+            this.imageUrl = response.result.fileId;
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
