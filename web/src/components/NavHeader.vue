@@ -11,9 +11,9 @@
             <li v-if="sessionKey!=null"><a href="javascript:;" @click="logout">注销</a></li>
         </ul>
         <div class="activity">
-            <h3>第一期全球交易大赛</h3>
-            <h3>丰厚奖金等你来拿</h3>
-            <h3><a href="javascript:;">立即报名<img src="@/assets/arrow-r.png" width="20px"></a></h3>
+            <h3 v-text="activity.mainTitle">第一期全球交易大赛</h3>
+            <h3 v-text="activity.subTitle">丰厚奖金等你来拿</h3>
+            <h3><a href="javascript:;" @click="signUp">立即报名<img src="@/assets/arrow-r.png" width="20px"></a></h3>
         </div>
     </div>
 </template>
@@ -22,10 +22,34 @@
 export default {
     data() {
         return {
-            sessionKey: window.sessionStorage.getItem("token")
+            sessionKey: window.sessionStorage.getItem("token"),
+            activity: {
+                mainTitle: '交易大赛主题',
+                subTitle: '交易大赛子主题'
+            }
         }
     },
+    created() {
+        this.getActivityInfo();
+    },
     methods: {
+        getActivityInfo() {
+            let self = this;
+            this.axios.get("/apis/banner/getBannerList")
+            .then(res => {
+                if(res.data.code == 0){
+                    self.activity.mainTitle = res.data.result.mainTitle;
+                    self.activity.subTitle = res.data.result.subTitle;
+                }
+            });
+        },
+        signUp() {
+            if (!this.sessionKey){
+                window.location.href = "/#/login";
+            }else{
+                window.location.href = "/#/signup";
+            }
+        },
         logout() {
             let self = this;
             this.axios.get("/apis/logout")

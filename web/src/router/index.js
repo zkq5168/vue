@@ -7,6 +7,7 @@ import SimpleHome from '@/views/SimpleHome'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Trader from '@/views/Trader'
+import SignUp from '@/views/SignUp'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,11 @@ const routes = [
         path: '/trader',
         name: 'trader',
         component: Trader
+      },
+      {
+        path: '/signup',
+        name: 'signup',
+        component: SignUp
       }
     ]
   }

@@ -2,9 +2,9 @@
     <div class="container">
         <div class="banner">
             <el-carousel indicator-position="none" height="480px">
-                <el-carousel-item v-for="item in 4" :key="item" height="480px">
+                <el-carousel-item v-for="item in bannerList" :key="item" height="480px">
                     <!-- <h3>{{ item }}</h3> -->
-                    <img src="@/assets/banner.png" />
+                    <img :src="item" />
                 </el-carousel-item>
             </el-carousel>
         </div>
@@ -181,6 +181,9 @@
 export default {
     data() {
         return {
+            bannerList: [
+                
+            ],
             tableData: [
                 {
                 rank: '1',
@@ -245,13 +248,30 @@ export default {
             ]
         }
     },
+    mounted: function() {
+        this.getBannerList();
+    },
     methods: {
         headerClass({row, rowIndex}) {
-            debugger;
             if (rowIndex == 0) {
                 return 'header-class';
             }
             return '';
+        },
+        getBannerList(){
+            let self = this;
+            this.axios.get("/apis/banner/getBannerList")
+            .then(res => {
+                if(res.data.code == 0){
+                    self.getBannerImg(res.data.result.activityPic);
+                }
+            });
+        },
+        getBannerImg(picId){
+            let picIds = picId.split(",");
+            for(let i=0; i<picIds.length; i++){
+                this.bannerList.push("/apis/image/"+picIds[i]);
+            }
         }
     }
 }
@@ -269,6 +289,11 @@ export default {
     height: 480px;
     background-color: #0056dd;
     margin-top: -80px;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
 }
 
 .el-carousel {
