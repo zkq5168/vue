@@ -24,7 +24,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item prop="traderServer">
-                <el-input class="trader-server" v-model="signupForm.traderServer" placeholder="请输入交易商服务器"></el-input>
+                <el-input class="trader-server" v-model="signupForm.traderServer" placeholder="请输入注册邮箱"></el-input>
             </el-form-item>
             <el-button class="signup-btn" @click="signup" type="primary">立即报名</el-button>
         </el-form>
@@ -62,8 +62,8 @@ export default {
                     { required: true, message: '请选择交易商名称', trigger: 'blur' }
                 ],
                 traderServer: [
-                    { required: true, message: '请输入交易商服务器', trigger: 'blur' },
-                    { min: 3, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
+                    { required: true, message: '请输入注册邮箱', trigger: 'blur' },
+                    { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
                 ]
             }
         }

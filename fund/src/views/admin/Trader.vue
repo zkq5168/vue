@@ -357,7 +357,8 @@ export default {
             this.listTrader(null, null, value);
         },
         uploadSuccess(response, file, fileList) {
-            this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
+            // this.imageUrl = response.result.filePath+"/"+response.result.fileId+"."+response.result.fileExt;
+            this.imageUrl = response.result.fileId;
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);

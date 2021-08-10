@@ -38,7 +38,7 @@ export default {
             this.faqPosStr = this.faqPos + "px";
         },
         contactMe() {
-            window.location.href = "tencent://message/?uin=526941938Site=咨询&Menu=yes";
+            window.location.href = "tencent://message/?uin=3066342757Site=咨询&Menu=yes";
         }
     }
 }

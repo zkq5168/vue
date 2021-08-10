@@ -11,6 +11,9 @@ import ActivityDetail from "@/views/admin/ActivityDetail"
 import SpecialOffer from "@/views/admin/SpecialOffer"
 import Trader from '@/views/admin/Trader'
 import News from '@/views/admin/News'
+import Rank from '@/views/admin/Rank'
+import Signup from '@/views/admin/Signup'
+import Comment from '@/views/admin/Comment'
 
 Vue.use(VueRouter);
 
@@ -69,6 +72,21 @@ const router = new VueRouter({
           path: "/admin/news",
           name: "news",
           component: News
+        },
+        {
+          path: "/admin/activity/rank",
+          name: "rank",
+          component: Rank
+        },
+        {
+          path: "/admin/activity/signup",
+          name: "singup",
+          component: Signup
+        },
+        {
+          path: "/admin/activity/comment",
+          name: "comment",
+          component: Comment
         }
       ]
     },

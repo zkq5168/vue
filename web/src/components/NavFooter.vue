@@ -4,90 +4,37 @@
             <div class="content">
                 <div class="menu">
                     <ul>
-                        <li><a href="javascript:;" @click="toggleFaq(0)">关于报名</a></li>
+                        <li v-for="(item,index) in ruleList" :id="item.ruleName" @click="toggleFaq(index)"><a href="javascript:;">{{item.ruleName}}</a></li>
+                        <!-- <li><a href="javascript:;" @click="toggleFaq(0)">关于报名</a></li>
                         <li><a href="javascript:;" @click="toggleFaq(1)">关于规则</a></li>
                         <li><a href="javascript:;" @click="toggleFaq(2)">关于违规交易</a></li>
                         <li><a href="javascript:;" @click="toggleFaq(3)">关于奖金</a></li>
-                        <li><a href="javascript:;" @click="toggleFaq(4)">大赛介绍</a></li>
+                        <li><a href="javascript:;" @click="toggleFaq(4)">大赛介绍</a></li> -->
                     </ul>
                 </div>
                 <div class="faq">
                     <div class="faq_content" :style="{'top': faqPosStr}">
-                        <h2>关于违规交易1</h2>
-                        <ul>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                        </ul>
-                        <h2>关于违规交易2</h2>
-                        <ul>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                        </ul>
-                        <h2>关于违规交易3</h2>
-                        <ul>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                        </ul>
-                        <h2>关于违规交易4</h2>
-                        <ul>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                        </ul>
-                        <h2>关于违规交易5</h2>
-                        <ul>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                            <li>
-                                <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题</div>
-                                <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答</div>
-                            </li>
-                        </ul>
+                        <div v-for="item in ruleList" class="ruleItem">
+                            <h2>{{item.ruleName}}</h2>
+                            <p v-html="item.ruleContent"></p>
+                        </div>
+                        <!-- <div>
+                            <h2>关于违规交易2</h2>
+                            <ul>
+                                <li>
+                                    <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题2</div>
+                                    <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答2</div>
+                                </li>
+                                <li>
+                                    <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题2</div>
+                                    <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答2</div>
+                                </li>
+                                <li>
+                                    <div class="ask"><img src="@/assets/ask.png" width="14px">这是一个问题2</div>
+                                    <div class="answer"><img src="@/assets/answer.png" width="14px">这是对问题的回答2</div>
+                                </li>
+                            </ul>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -120,17 +67,30 @@ export default {
     data() {
         return {
             faqPos: 0,
-            faqPosStr: ''
+            faqPosStr: '',
+            ruleList: []    //规则列表
         }
+    },
+    created() {
+        this.getRuleList();  
     },
     methods: {
         toggleFaq(pos) {
-            this.faqPos = -1 * pos * 389;
+            this.faqPos = -1 * pos * 449;
             this.faqPos += pos/2;
             this.faqPosStr = this.faqPos + "px";
         },
         contactMe() {
-            window.location.href = "tencent://message/?uin=526941938Site=咨询&Menu=yes";
+            window.location.href = "tencent://message/?uin=3066342757&Site=咨询&Menu=yes";
+        },
+        getRuleList() {
+            let self = this;
+            this.axios.get("/apis/rule/list")
+            .then(res=>{
+                if(res.data.code==0){
+                    self.ruleList = res.data.retObj;
+                }
+            });
         }
     }
 }
@@ -139,14 +99,14 @@ export default {
 
 <style scoped>
 .rule {
-    height: 490px;
-    background: url('../assets/footer.png') no-repeat;
+    height: 540px;
+    background: url('../assets/footer.png') 100%;
     position: relative;
 }
 
 .content {
     width: 1196px;
-    height: 390px;
+    height: 450px;
     margin: 50px auto;
     position: absolute;
     left: 50%;
@@ -205,7 +165,7 @@ export default {
     padding-right: 10px;
 }
 
-.faq ul {
+.faq p {
     margin: 0;
     padding: 0;
 }
@@ -229,6 +189,10 @@ export default {
 
 .faq .faq_content {
     position: absolute;
+}
+
+.faq_content p {
+    height: 367px;
 }
 
 .copyright {

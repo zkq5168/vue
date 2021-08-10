@@ -10,7 +10,20 @@
         <div class="main">
             <div class="nav">当前位置：首页 > <a href="javascript:;">交易商</a></div>
             <ul>
-                <li>
+                <li v-for="item in traderList">
+                    <div class="main-left">
+                        <a href="javascript:;" @click="showTraderInfo(item.traderId)"><img :src="item.traderPic" width="154px"></a>
+                    </div>
+                    <div class="main-right">
+                        <p v-html="item.traderContent"></p>
+                        <!-- <h2>成立时间：2009年</h2>
+                        <p>所属国家：伯利兹</p>
+                        <p>货币点差：浮动：欧美1.8左右，黄金4.8左右</p>
+                        <p>交易品种：外汇、贵金属</p>
+                        <p>监督机构：FCA 70548</p> -->
+                    </div>
+                </li>
+                <!-- <li>
                     <div class="main-left">
                         <img src="@/assets/trader.png" >
                     </div>
@@ -45,23 +58,39 @@
                         <p>交易品种：外汇、贵金属</p>
                         <p>监督机构：FCA 70548</p>
                     </div>
-                </li>
-                <li>
-                    <div class="main-left">
-                        <img src="@/assets/trader.png" >
-                    </div>
-                    <div class="main-right">
-                        <h2>成立时间：2009年</h2>
-                        <p>所属国家：伯利兹</p>
-                        <p>货币点差：浮动：欧美1.8左右，黄金4.8左右</p>
-                        <p>交易品种：外汇、贵金属</p>
-                        <p>监督机构：FCA 70548</p>
-                    </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            traderList: []      //交易商列表
+        }
+    },
+    created() {
+        this.getTraderList();
+    },
+    methods: {
+        getTraderList(){
+            let self = this;
+            this.axios.get("/apis/trader/list")
+            .then(res=>{
+                if(res.data.code==0){
+                    self.traderList = res.data.result;
+                }
+            })
+        },
+        showTraderInfo(traderId){
+            window.location.href = "/#/traderInfo/" + traderId;
+        }
+    }
+}
+</script>
+
 
 <style scoped>
 .container {
@@ -88,6 +117,8 @@
 .main li {
     padding-top: 34px;
     display: flex;
+    max-height: 130px;
+    overflow: hidden;
 }
 
 .main-left {

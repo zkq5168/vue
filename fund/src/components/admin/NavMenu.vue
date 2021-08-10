@@ -16,8 +16,17 @@
             <li><img src="@/assets/images/peroid.png">
                 <router-link to="/admin/activity/peroid">活动期数管理</router-link>
             </li>
+            <li><img src="@/assets/images/rank.png">
+                <router-link to="/admin/activity/rank">活动排名管理</router-link>
+            </li>
             <li><img src="@/assets/images/activity_detail.png">
                 <router-link to="/admin/activity/detail">活动明细管理</router-link>
+            </li>
+            <li><img src="@/assets/images/signup.png">
+                <router-link to="/admin/activity/signup">活动报名管理</router-link>
+            </li>
+            <li><img src="@/assets/images/comment.png">
+                <router-link to="/admin/activity/comment">活动评论管理</router-link>
             </li>
             <li><img src="@/assets/images/special_offer.png">
                 <router-link to="/admin/special/offer">优惠活动管理</router-link>

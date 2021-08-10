@@ -1,9 +1,9 @@
 <template>
     <div class="header">
         <ul>
-            <li><a href="/#/index">大赛内容</a></li>
-            <li><a href="javascript:;">大赛规则</a></li>
-            <li><a href="javascript:;">大赛报名</a></li>
+            <li><a href="/#/index/info" @click="scrollToTarget()">大赛内容</a></li>
+            <li><a href="/#/index/rule" @click="scrollToTarget()">大赛规则</a></li>
+            <li><a href="/#/signup">大赛报名</a></li>
             <li><a href="/#/trader">交易商</a></li>
             <li><a href="/#/discount">优惠活动</a></li>
             <li v-if="sessionKey===null"><a href="/#/login">登录</a></li>
@@ -44,11 +44,11 @@ export default {
             });
         },
         signUp() {
-            if (!this.sessionKey){
-                window.location.href = "/#/login";
-            }else{
+            // if (!this.sessionKey){
+            //     window.location.href = "/#/login";
+            // }else{
                 window.location.href = "/#/signup";
-            }
+            // }
         },
         logout() {
             let self = this;
@@ -66,6 +66,20 @@ export default {
                     });
                 }
             });
+        },
+        /**
+         * 跳转到指定位置
+         */
+        scrollToTarget() {
+            let url = this.$route.path;
+            let liElement = document.getElementsByClassName("ruleItem");
+            if(url.indexOf("info") > 0){
+                window.scrollTo(0, liElement[0].scrollHeight + 500);
+            }else if(url.indexOf("rule") > 0){
+                window.scrollTo(0, liElement[1].scrollHeight + 500);
+            }else if(url.indexOf("signup") > 0){
+                window.scrollTo(0, liElement[2].scrollHeight + 500);
+            }
         }
     }
 }

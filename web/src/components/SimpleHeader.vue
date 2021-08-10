@@ -1,9 +1,9 @@
 <template>
     <div class="header">
         <ul>
-            <li><a href="/#/index">大赛内容</a></li>
-            <li><a href="javascript:;">大赛规则</a></li>
-            <li><a href="javascript:;">大赛报名</a></li>
+            <li><a href="/#/index/info">大赛内容</a></li>
+            <li><a href="/#/index/rule">大赛规则</a></li>
+            <li><a href="/#/index/signup">大赛报名</a></li>
             <li><a href="/#/trader">交易商</a></li>
             <li><a href="/#/discount">优惠活动</a></li>
             <li v-if="sessionKey===null"><a href="/#/login">登录</a></li>

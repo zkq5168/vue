@@ -7,7 +7,7 @@
                 </div>
                 <el-form :model="userForm" :rules="rules" ref="userForm">
                     <el-form-item prop="username">
-                        <el-input class="login-name" v-model="userForm.username" placeholder="请输入用户名"></el-input>
+                        <el-input class="login-name" v-model="userForm.username" placeholder="请输入手机号码"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
                         <el-input class="login-pass" v-model="userForm.password" placeholder="请输入密码" show-password></el-input>
@@ -30,8 +30,8 @@ export default {
             },
             rules: {
                 username: [
-                    { required: true, message: '请输入注册名称', trigger: 'blur' },
-                    { min: 3, max: 11, message: '长度在 3 到 11 个字符', trigger: 'blur' }
+                    { required: true, message: '请输入手机号码', trigger: 'blur' },
+                    { min: 11, max: 11, message: '长度在11个字符', trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
